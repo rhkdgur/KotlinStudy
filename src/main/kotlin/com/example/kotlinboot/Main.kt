@@ -1,8 +1,16 @@
 package com.example.kotlinboot
 
+import java.util.*
+
 // run 실행 메서드
 fun main() {
-    Test1()
+   var test9 = Test9()
+    test9.intro();
+    test9.a = "테스트"
+    println("a는 ${test9.a}");
+    test9.readTextChange()
+    test9.textChange("이름 변경")
+    test9.readTextChange()
 }
 
 //컴파일 상수
@@ -40,4 +48,186 @@ fun Test2() {
     var s = "20"
     i = s.toInt()
     s = i.toString()
+}
+
+// null 표현 방식
+fun Test3() {
+    var a = null // 자료형을 선언하지 않을 경우 null 선언 가능
+    var b : Int? = null // 자료형을 표시할 경우 ? 를 추가하지 않으면 에러 발생
+    println(a)
+    println(b)
+}
+
+// 배열 방식
+fun Test4 () {
+    var intArr = arrayOf(1,2,3,4) // intArr : Array<Int> = arrayOf(1,2,3,4)
+    var intArr2 = arrayOfNulls<String>(5) // 타입이 선언될 경우 ? 표시 하지않으면 에러
+    var intArr3 : Array<Any> = arrayOf(1, "a", 3.2, 4) // Any 타입은 java의 Object와 동일
+    println(Arrays.toString(intArr)) // [1, 2, 3, 4]
+    println(Arrays.toString(intArr2)) // [null, null, null, null, null]
+    println(Arrays.toString(intArr3)) // [1, a, 3.2, 4]
+}
+
+/**
+ * 기본 함수
+ */
+fun Test5() {
+    
+    // 기본형 함수
+    // fun 함수이름(매개변수 : type) : 리턴 타입
+    fun add1( a : Int, b: Int, c: Int): Int {
+        return a + b + c
+    }
+    
+    // 단일형 함수
+    fun add2( a : Int, b: Int, c: Int) = a + b + c
+
+    println(add1(1,2,3))
+    println(add2(1,2,3))
+}
+
+//if 조건
+fun Test6() {
+    var a = 5
+
+    if(a > 5) {
+        println("5보다 큼")
+    }else if(a > 3) {
+        println("3보다 큼")
+    }else {
+        println("----")
+    }
+
+    //데이터 타입 비교 java의 InstanceOf 와 동일한 개념
+    if(a is Int) {
+       println("동일")
+    }else {
+       println("불일치")
+    }
+}
+
+//when == switch 문
+fun Test7 (a: Any) {
+    when(a) {
+        1 -> print(a)
+        "aaa" -> print(a)
+        else -> print(a)
+    }
+
+    //변수 b에 바로 선언가능 return값으로 인식하나봄
+    var b = when(a) {
+        1 -> a
+        "aaa" -> a
+        else -> a
+    }
+
+    println(b)
+}
+
+//while 문은 java와 동일
+// break 와 continue는 java와 동일
+fun Test8 () {
+    for(i in 0..3) {
+        print(i)
+        print(" ")
+    }
+
+    println()
+    println("----------")
+
+    for(i in 3 downTo 0){
+        print(i)
+        print(" ")
+    }
+
+    println()
+    println("----------")
+
+    for(i in 0..5 step 2) {
+        print(i)
+        print(" ")
+    }
+
+    println()
+    println("----------")
+
+    for(i in 'a'..'e'){
+        print(i)
+        print(" ")
+    }
+
+    println()
+    println("----------")
+
+    var intArr = listOf(1,2,3,4,5)
+    intArr.forEach{
+        x ->
+            print(x)
+            print(" ")
+
+    }
+
+    println()
+    println("----------")
+
+    // @label 사용
+    // label 이름을 break, continue에 달면 그 실행 결과는 라벨 기준이 된다.
+
+    // 만약 break문에 아무것도 선언 안하는 경우
+    for( i in 0..5){
+        for(j in 0..5) {
+            if(i == 0 && j == 3) {
+                println("${i},${j}")
+                break;
+            }
+        }
+        println("i for는 계속 돔...")
+    }
+
+    println()
+    println("----------")
+
+    // 만약 parent label을 이중 포문 break에 달 경우
+    parent@for( i in 0..5){
+        for(j in 0..5) {
+            if(i == 0 && j == 3) {
+                println("${i},${j}")
+                break@parent;
+            }
+        }
+        println("i for는 계속 돔...")
+    }
+}
+
+//클래스
+class Test9{
+    var a : String = "11"
+        set(value) {
+            field = value
+        }
+        get() = field
+
+    var b : Int = 10
+        set(value) {
+            field = value
+        }
+        get() = field
+
+    private var c : String = "접근제어용"
+
+    fun textChange(value : String) {
+        c = value
+    }
+
+    fun readTextChange() = println(c)
+
+    init{
+        a = "";
+        b = 0
+    }
+
+    fun intro() {
+        println("$a, $b")
+    }
+
 }
