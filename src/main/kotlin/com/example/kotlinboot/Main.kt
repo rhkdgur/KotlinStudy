@@ -200,7 +200,7 @@ fun Test8 () {
 }
 
 //클래스
-class Test9{
+class Test9(var d : String,var e : Int){
     var a : String = "11"
         set(value) {
             field = value
@@ -208,26 +208,76 @@ class Test9{
         get() = field
 
     var b : Int = 10
-        set(value) {
+        private set(value) {
             field = value
         }
         get() = field
 
     private var c : String = "접근제어용"
 
+    //생성자 초기 실행 할때 사용
+    init{
+        println("$d, $e")
+    }
+
+    //보조 생성자
+    constructor() : this("12", 15)
+
     fun textChange(value : String) {
         c = value
     }
 
     fun readTextChange() = println(c)
-
-    init{
-        a = "";
-        b = 0
-    }
+    
 
     fun intro() {
         println("$a, $b")
     }
+
+}
+
+//상속
+// open이 아닌 abstract 추상클래스로 선언하여도 상속이 가능하다
+//abstract class Sound(var name : String,var type : String) {
+open class Sound(var name : String,var type : String) {
+    open fun voice() {
+        println("${name}과 ${type}")
+    }
+
+    fun voice2 () {
+        println("${name}과 ${type}")
+    }
+}
+
+//인터페이스
+interface Bang{
+    fun bang()
+}
+
+interface Shoot{
+    fun shot(){
+        println("shoo shoo shoo")
+    }
+}
+
+class Test10(var name1 : String , var type1 : String) : Sound(name1,type1), Bang,Shoot{
+
+    // 부모 클래스가 open으로 메소드를 열어두었기 떄문에 override가 가능함
+    override fun voice(){
+        println("${name1} 또는 ${type1}")
+    }
+
+    override fun bang() {
+        println("bang 상속 가능")
+    }
+    
+    override fun shot(){
+        println("shot 상속 가능")
+    }
+
+    //에러가 발생 open을 안해줘서 override가 안됨
+//    override fun voice2() {
+//
+//    }
 
 }
